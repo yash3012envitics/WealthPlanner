@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "WealthPlanner",
+    "slug": "wealthplanner",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0f1c18"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.wealthplanner.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f1c18"
+      },
+      "package": "app.wealthplanner.mobile"
+    },
+    "extra": {
+      "apiUrl": "http://127.0.0.1:8000"
+    }
+  }
+}
