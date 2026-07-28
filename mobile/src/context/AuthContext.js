@@ -30,10 +30,12 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = useCallback(async (email, password) => {
-    const body = new URLSearchParams()
-    body.set('username', email)
-    body.set('password', password)
-    const data = await api('/api/auth/login', { method: 'POST', body })
+    const body = `username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+    const data = await api('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    })
     await AsyncStorage.setItem('wp_token', data.access_token)
     setToken(data.access_token)
     setUser(await api('/api/auth/me'))

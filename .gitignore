@@ -4,7 +4,6 @@ __pycache__/
 .venv/
 venv/
 *.db
-.env
 uploads/
 
 # Node
@@ -17,5 +16,8 @@ web-build/
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/
 *.log
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat

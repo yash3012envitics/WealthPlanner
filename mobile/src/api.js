@@ -3,7 +3,7 @@ import * as FileSystem from 'expo-file-system'
 import * as Sharing from 'expo-sharing'
 
 // Change this to your machine LAN IP when testing on a physical device.
-export const API_BASE = 'http://127.0.0.1:8000'
+export const API_BASE = 'https://wealthplanner.onrender.com'
 
 function parseError(data) {
   const detail = data?.detail
@@ -14,27 +14,32 @@ function parseError(data) {
 
 export async function api(path, options = {}) {
   const isForm = typeof FormData !== 'undefined' && options.body instanceof FormData
+  const isString = typeof options.body === 'string'
+  const isUrlParams =
+    options.body instanceof URLSearchParams ||
+    (options.body && typeof options.body.toString === 'function' && options.body.constructor?.name === 'URLSearchParams')
+
   const headers = {
-    ...(options.body instanceof URLSearchParams
-      ? { 'Content-Type': 'application/x-www-form-urlencoded' }
-      : isForm
-        ? {}
+    ...(isForm
+      ? {}
+      : isString || isUrlParams
+        ? { 'Content-Type': 'application/x-www-form-urlencoded' }
         : { 'Content-Type': 'application/json' }),
     ...(options.headers || {}),
   }
   const token = await AsyncStorage.getItem('wp_token')
   if (token) headers.Authorization = `Bearer ${token}`
 
+  const requestBody = isUrlParams
+    ? options.body.toString()
+    : options.body && !isForm && !isString
+      ? JSON.stringify(options.body)
+      : options.body
+
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers,
-    body:
-      options.body &&
-      !(options.body instanceof URLSearchParams) &&
-      !isForm &&
-      typeof options.body !== 'string'
-        ? JSON.stringify(options.body)
-        : options.body,
+    body: requestBody,
   })
 
   if (res.status === 204) return null
