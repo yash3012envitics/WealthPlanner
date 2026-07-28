@@ -19,8 +19,21 @@
       },
       "package": "app.wealthplanner.mobile"
     },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ]
+    ],
     "extra": {
-      "apiUrl": "http://127.0.0.1:8000"
+      "apiUrl": "https://wealthplanner.onrender.com",
+      "eas": {
+        "projectId": "d4f01207-fa82-4836-b081-0878846dd60e"
+      }
     }
   }
 }
